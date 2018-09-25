@@ -6,10 +6,10 @@ import (
 	dsg "github.com/bwmarrin/discordgo"
 )
 
-var roles = make([]map[string]string)
+var roles = []map[string]string
 
 func init() {
-	if err := dat.Load("aurolepicker/roles.json" & roles); err != nil {
+	if err := dat.Load("aurolepicker/roles.json", &roles); err != nil {
 		dat.Log.Println(err)
 	}
 }
@@ -26,7 +26,8 @@ func joinRole(s *dsg.Session, m *dsg.Message, role string) bool {
 			return false
 		}
 		if err := s.GuildMemberRoleAdd(guild.ID, m.Author.ID, roleid); err != nil {
-			return err
+			dat.Log.Println(err)
+			return false
 		}
 	}
 	return true
@@ -40,7 +41,8 @@ func quitRole(s *dsg.Session, m *dsg.Message, role string) bool {
 			return false
 		}
 		if err := s.GuildMemberRoleRemove(guild.ID, m.Author.ID, roleid); err != nil {
-			return err
+			dat.Log.Println(err)
+			return false
 		}
 	}
 	return true

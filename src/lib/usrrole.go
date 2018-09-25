@@ -6,7 +6,6 @@ import (
 	//	"github.com/aurumbot/lib/dat"
 	//	f "github.com/aurumbot/lib/foundation"
 	dsg "github.com/bwmarrin/discordgo"
-	"sort"
 	"strings"
 )
 
@@ -20,7 +19,7 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 
 	flgs := flags.Parse(message.Content)
 	if len(flgs) <= 2 {
-		session.ChannelMessageSend(m.ChannelID, "Please provide a valid flag.")
+		session.ChannelMessageSend(message.ChannelID, "Please provide a valid flag.")
 		return
 	}
 
@@ -31,7 +30,7 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 		switch flgs[i].Name {
 		case "-j", "--join", "-a", "--add":
 			for _, role := range strings.Split(flgs[i].Value, ",") {
-				ok := joinRole(strings.TrimSpace(role))
+				ok := joinRole(session, message, strings.TrimSpace(role))
 				if ok {
 					joinSucc = append(joinSucc, role)
 				} else {
@@ -40,7 +39,7 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 			}
 		case "-q", "--quit", "--leave":
 			for _, role := range strings.Split(flgs[i].Value, ",") {
-				ok := quitRole(strings.TrimSpace(role))
+				ok := quitRole(session, message, strings.TrimSpace(role))
 				if ok {
 					quitSucc = append(quitSucc, role)
 				} else {
@@ -49,7 +48,7 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 			}
 		case "-l", "-ls", "--list":
 			if !listed {
-				session.ChannelMessageSend(m.ChannelID, listRoles())
+				session.ChannelMessageSend(message.ChannelID, listRoles())
 			}
 			listed = true
 		default:
@@ -59,5 +58,5 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 
 	report := "**Done**\n"
 
-	s.ChannelMessageSend(message.ChannelID, report)
+	session.ChannelMessageSend(message.ChannelID, report)
 }
