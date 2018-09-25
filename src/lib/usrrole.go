@@ -3,8 +3,8 @@ package rolepicker
 import (
 	"fmt"
 	"github.com/aurumbot/flags"
-	"github.com/aurumbot/lib/dat"
-	f "github.com/aurumbot/lib/foundation"
+	//	"github.com/aurumbot/lib/dat"
+	//	f "github.com/aurumbot/lib/foundation"
 	dsg "github.com/bwmarrin/discordgo"
 	"sort"
 	"strings"
