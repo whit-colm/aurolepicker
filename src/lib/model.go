@@ -3,7 +3,7 @@ package rolepicker
 import (
 	"github.com/aurumbot/lib/dat"
 	f "github.com/aurumbot/lib/foundation"
-	"github.com/bwmarrin/discordgo"
+	dsg "github.com/bwmarrin/discordgo"
 )
 
 var roles = make([]map[string]string)
