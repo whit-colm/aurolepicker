@@ -3,14 +3,13 @@ A novelty role picker for Aurum bots
 
 ## Important:
 
-```
-Commands defined:
+**Commands defined:**
 - csrole
 - csrolemod
 
-Notes:
+**Notes:**
 - [x] multi-server support
-```
+- [ ] requires additional system dependancies
 
 ## About
 
