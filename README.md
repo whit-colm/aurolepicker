@@ -10,6 +10,7 @@ A novelty role picker for Aurum bots
 **Notes:**
 - [x] multi-server support
 - [ ] requires additional system dependancies
+- [ ] creates autonomous background processes
 
 ## About
 
