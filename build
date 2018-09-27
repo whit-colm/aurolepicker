@@ -1,6 +1,5 @@
 #!/bin/bash
 
-env CGO_ENABLED=0 GO111MODULE=on go build -buildmode=plugin ./src/main/main.go
-if [ "$?" -ne "0" ] ; then exit 1 ; fi
-rm ./*.so ; env CGO_ENABLED=0 GO111MODULE=on go build -v -o ./bin/aurolepicker.so ./src/main/main.go
-if [ "$?" -ne "0" ] ; then exit 1 ; else echo "Compiled plugin to bin. Move \"`ls bin`\" into a bots plugin dir to use." ; fi
+if [ ! -d "./bin" ] ; then mkdir bin ; fi
+env CGO_ENABLED=1 GO111MODULE=on go build -buildmode=plugin -v -o ./bin/aurolepicker.so ./src/main/main.go
+if [ "$?" -ne "0" ] ; then exit 1 ; rm -rf ./bin ; else echo "Compiled plugin to bin. Move \"`ls bin`\" into a bots plugin dir to use." ; fi

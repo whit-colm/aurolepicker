@@ -3,8 +3,8 @@ package rolepicker
 import (
 	"fmt"
 	"github.com/aurumbot/flags"
-	//	"github.com/aurumbot/lib/dat"
-	//	f "github.com/aurumbot/lib/foundation"
+	"github.com/aurumbot/lib/dat"
+	f "github.com/aurumbot/lib/foundation"
 	dsg "github.com/bwmarrin/discordgo"
 	"strings"
 )
@@ -17,8 +17,16 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 	var etcIssue []string
 	var listed = false
 
+	guild, err := f.GetGuild(session, message)
+	if err != nil {
+		dat.Log.Println(err)
+		dat.AlertDiscord(session, message, err)
+		return
+	}
+
 	flgs := flags.Parse(message.Content)
-	if len(flgs) <= 2 {
+
+	if len(flgs) <= 1 {
 		session.ChannelMessageSend(message.ChannelID, "Please provide a valid flag.")
 		return
 	}
@@ -48,7 +56,7 @@ func UsrRoles(session *dsg.Session, message *dsg.Message) {
 			}
 		case "-l", "-ls", "--list":
 			if !listed {
-				session.ChannelMessageSend(message.ChannelID, listRoles())
+				session.ChannelMessageSend(message.ChannelID, listRoles(guild.ID))
 			}
 			listed = true
 		default:
