@@ -17,10 +17,6 @@ func init() {
 	}
 }
 
-//func addrole(map[string]string) {}
-
-//func delrole(string) {}
-
 func joinRole(s *dsg.Session, m *dsg.Message, role string) bool {
 	guild, err := f.GetGuild(s, m)
 	if err != nil {
@@ -72,6 +68,9 @@ func listRoles(guildID string) string {
 }
 
 func addRole(guildID string, rolemap map[string]string) {
+	if roles[guildID] == nil {
+		roles[guildID] = make(map[string]string)
+	}
 	for k, v := range rolemap {
 		roles[guildID][k] = v
 	}
